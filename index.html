@@ -1,255 +1,258 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Milo's 1st Birthday</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: radial-gradient(circle at top left, #fef6f9, #ffd6e0, #fceabb);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 1rem;
-      text-align: center;
-      overflow: hidden;
-      flex-direction: column;
-    }
-
-    .card {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      max-width: 580px;
-      margin: 2rem auto 0;
-      display: none;
-      z-index: 2;
-    }
-
-    .card.show {
-      display: block;
-      animation: openEnvelope 1s ease-out forwards;
-    }
-
-    @keyframes openEnvelope {
-      0% {
-        transform: rotateX(-90deg) scaleY(0);
-        opacity: 0;
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
       }
-      100% {
-        transform: rotateX(0deg) scaleY(1);
-        opacity: 1;
+      body {
+        background: linear-gradient(270deg, #87cefa, #e0ffff, #b2ebf2, #87cefa);
+        background-size: 800% 800%;
+        animation: animatedBackground 20s ease infinite;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
       }
-    }
-
-    h1 {
-      color: #f497b5;
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .details {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .map-link {
-      display: inline-block;
-      margin-top: 0.5rem;
-      background: #a5d8ff;
-      padding: 0.4rem 0.8rem;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .map-link:hover {
-      background: #74c0fc;
-    }
-
-    .footer {
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: #777;
-    }
-
-    .open-btn {
-      background-color: #f497b5;
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .open-btn:hover {
-      background-color: #e67798;
-    }
-
-    canvas.confetti, canvas.fireworks {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .balloon {
-      position: absolute;
-      width: 40px;
-      height: 55px;
-      background: radial-gradient(ellipse at center, #ff8eb5, #f497b5);
-      border-radius: 50% 50% 45% 45%;
-      box-shadow: inset -3px -6px 5px rgba(255, 255, 255, 0.3);
-      animation: floatUp 10s linear infinite;
-      z-index: 0;
-    }
-
-    .balloon::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 20px;
-      background: #555;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
+      @keyframes animatedBackground {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
-      10% {
-        opacity: 1;
+      .balloon {
+        position: absolute;
+        width: 40px;
+        height: 60px;
+        background-color: pink;
+        border-radius: 50% 50% 50% 50%;
+        opacity: 0.8;
+        animation: float 10s linear infinite;
+        z-index: 0;
       }
-      100% {
-        transform: translateY(-10vh) rotate(360deg);
-        opacity: 0;
+      .balloon::after {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        background: #888;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
       }
-    }
-  </style>
-</head>
-<body>
-  <canvas class="confetti"></canvas>
-  <canvas class="fireworks"></canvas>
+      @keyframes float {
+        0% { transform: translateY(100vh); opacity: 0.5; }
+        100% { transform: translateY(-120vh); opacity: 0.9; }
+      }
+      .card {
+        width: 90%;
+        max-width: 800px;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1200px;
+        transition: 1s;
+        z-index: 1;
+      }
+      .card:hover {
+        transform: rotate(-2deg);
+      }
+      .card:hover .outside {
+        transform: rotateY(-130deg);
+      }
+      .outside,
+      .inside {
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        left: 50.1%;
+      }
+      .inside {
+        background: linear-gradient(to right, #fff0f5, #e0f2f1);
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        left: 50%;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .invitation-text {
+        max-width: 100%;
+        flex: 1 1 250px;
+      }
+      .inside-image {
+        max-width: 100%;
+        flex: 1 1 250px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        object-fit: cover;
+      }
+      @media (max-width: 768px) {
+        .inside {
+          flex-direction: column;
+        }
+      }
+      .outside {
+        transform-style: preserve-3d;
+        z-index: 1;
+        transform-origin: left;
+        transition: 2s;
+        cursor: pointer;
+      }
+      .front,
+      .back {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        backface-visibility: hidden;
+        transform: rotateX(0deg);
+      }
+      .front {
+        background-color: #fdf6f0;
+      }
+      .back {
+        transform: rotateY(180deg);
+        background: linear-gradient(to left, #f3e5f5, #e1f5fe);
+      }
+      .cake {
+        width: 100%;
+        position: absolute;
+        bottom: 30px;
+      }
+      .top-layer,
+      .middle-layer,
+      .bottom-layer {
+        height: 80px;
+        width: 240px;
+        background-repeat: repeat;
+        background-size: 60px 100px;
+        background-position: 28px 0;
+        background-image: linear-gradient(
+            transparent 50px,
+            #fedbab 50px,
+            #fedbab 60px,
+            transparent 60px
+          ),
+          radial-gradient(circle at 30px 5px, #ffb6b9 30px, #ffe082 31px);
+        border-radius: 10px 10px 0 0;
+        position: relative;
+        margin: auto;
+      }
+      .middle-layer {
+        transform: scale(0.85);
+        top: 6px;
+      }
+      .top-layer {
+        transform: scale(0.7);
+        top: 26px;
+      }
+      .candle {
+        height: 45px;
+        width: 15px;
+        background: repeating-linear-gradient(
+          45deg,
+          #fd3018 0,
+          #fd3018 5px,
+          #ffa89e 5px,
+          #ffa89e 10px
+        );
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        bottom: 202px;
+      }
+      .candle:before {
+        content: "";
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        background-color: #ffcc80;
+        border-radius: 0 50% 50% 50%;
+        bottom: 48px;
+        transform: rotate(45deg);
+        left: -1px;
+      }
+      .outside p {
+        font-size: 26px;
+        text-transform: uppercase;
+        margin-top: 30px;
+        text-align: center;
+        letter-spacing: 6px;
+        color: #6a1b9a;
+      }
+      .inside h1 {
+        color: #f48fb1;
+        font-size: 1.4rem;
+        margin-bottom: 0;
+      }
+      .details {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        color: #6a1b9a;
+      }
+      .map-link {
+        padding: 8px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        background: #ce93d8;
+        color: white;
+        transition: background 0.3s ease;
+        font-size: 1.2rem;
+      }
+      .map-link:hover {
+        background: #ba68c8;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Balloons -->
+    <div class="balloon" style="left: 10%; background-color: #f48fb1; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 30%; background-color: #ffd54f; animation-delay: 3s;"></div>
+    <div class="balloon" style="left: 50%; background-color: #81d4fa; animation-delay: 5s;"></div>
+    <div class="balloon" style="left: 70%; background-color: #ce93d8; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 90%; background-color: #aed581; animation-delay: 4s;"></div>
 
-  <button class="open-btn" onclick="document.querySelector('.card').classList.add('show')">Open Invitation</button>
-
-  <div class="card">
-    <h1>Join us for Milo's first birthday celebration</h1>
-    <div class="details">
-      <p><strong>Who:</strong> Milo</p>
-      <p><strong>When:</strong> 18:00, May 24, 2025</p>
-      <p><strong>Where:</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
-      <a class="map-link" href="https://maps.google.com/?q=12+Tr%E1%BA%A5n+V%C5%A9,+Ba+%C4%90%C3%ACnh,+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener noreferrer">View on Map</a>
+    <div class="card">
+      <div class="outside">
+        <div class="front">
+          <p>You're Invited</p>
+          <div class="cake">
+            <div class="top-layer"></div>
+            <div class="middle-layer"></div>
+            <div class="bottom-layer"></div>
+            <div class="candle"></div>
+          </div>
+        </div>
+        <div class="back"></div>
+      </div>
+      <div class="inside">
+        <div class="invitation-text">
+          <h1>Join us for Milo's first birthday celebration</h1>
+          <h2>Hãy đến chung vui trong tiệc sinh nhật đầu tiên của Milo!</h2>
+          <div class="details">
+            <p>🎉 <strong>Date:</strong> Saturday, May 24, 2025</p>
+            <p>🕒 <strong>Time:</strong> 18:00</p>
+            <p>📍 <strong>Location:</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
+          </div>
+          <a class="map-link" href="https://maps.google.com/?q=12+Tr%E1%BA%A5n+V%C5%A9,+Ba+%C4%90%C3%ACnh,+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener noreferrer">View on Map</a>
+        </div>
+        <img class="inside-image" src="https://raw.githubusercontent.com/spillif/milo-birthday/main/Image.jpg" alt="Birthday Celebration" />
+      </div>
     </div>
-    <div class="footer">
-      We can't wait to celebrate with you!
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const confettiCanvas = document.querySelector(".confetti");
-      const ctx = confettiCanvas.getContext("2d");
-      confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight;
-
-      const pieces = Array.from({ length: 100 }, () => ({
-        x: Math.random() * confettiCanvas.width,
-        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
-        size: Math.random() * 6 + 4,
-        speed: Math.random() * 3 + 2,
-        color: `hsl(${Math.random() * 360}, 70%, 60%)`
-      }));
-
-      function drawConfetti() {
-        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-        for (const p of pieces) {
-          ctx.fillStyle = p.color;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
-          ctx.fill();
-          p.y += p.speed;
-          if (p.y > confettiCanvas.height) {
-            p.y = -10;
-            p.x = Math.random() * confettiCanvas.width;
-          }
-        }
-        requestAnimationFrame(drawConfetti);
-      }
-      drawConfetti();
-
-      const fwCanvas = document.querySelector(".fireworks");
-      const fwCtx = fwCanvas.getContext("2d");
-      fwCanvas.width = window.innerWidth;
-      fwCanvas.height = window.innerHeight;
-
-      function createFirework(x, y) {
-        const particles = [];
-        for (let i = 0; i < 50; i++) {
-          particles.push({
-            x,
-            y,
-            angle: Math.random() * 2 * Math.PI,
-            speed: Math.random() * 4 + 1,
-            radius: Math.random() * 3 + 2,
-            alpha: 1,
-            color: `hsl(${Math.random() * 360}, 100%, 70%)`
-          });
-        }
-        return particles;
-      }
-
-      let fireworks = [];
-      setInterval(() => {
-        fireworks.push(...createFirework(Math.random() * fwCanvas.width, Math.random() * fwCanvas.height * 0.5));
-      }, 2000);
-
-      function drawFireworks() {
-        fwCtx.fillStyle = "rgba(255, 255, 255, 0.1)";
-        fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
-        fireworks = fireworks.filter(p => p.alpha > 0.01);
-        for (const p of fireworks) {
-          p.x += Math.cos(p.angle) * p.speed;
-          p.y += Math.sin(p.angle) * p.speed;
-          p.alpha *= 0.96;
-          fwCtx.fillStyle = p.color;
-          fwCtx.globalAlpha = p.alpha;
-          fwCtx.beginPath();
-          fwCtx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-          fwCtx.fill();
-        }
-        fwCtx.globalAlpha = 1;
-        requestAnimationFrame(drawFireworks);
-      }
-      drawFireworks();
-
-      for (let i = 0; i < 20; i++) {
-        const balloon = document.createElement('div');
-        balloon.className = 'balloon';
-        balloon.style.left = `${Math.random() * 100}vw`;
-        balloon.style.animationDelay = `${Math.random() * 5}s`;
-        document.body.appendChild(balloon);
-      }
-    });
-  </script>
-</body>
+  </body>
 </html>
