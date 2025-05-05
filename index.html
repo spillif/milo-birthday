@@ -5,63 +5,179 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Milo's 1st Birthday</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #fef6f9;
-      color: #333;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
     }
-    .container {
-      max-width: 600px;
-      padding: 2rem;
-      margin: 2rem;
+
+    .envelope {
+      position: relative;
+      width: 400px;
+      height: 280px;
+      background: #f497b5;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      animation: openEnvelope 2s ease forwards;
+    }
+
+    .flap-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #f497b5;
+      transform-origin: top;
+      z-index: 2;
+      border-bottom: 2px solid #e17fa2;
+      animation: openFlapTop 1.5s ease forwards;
+    }
+
+    @keyframes openFlapTop {
+      0% { transform: rotateX(0deg); }
+      100% { transform: rotateX(-120deg); }
+    }
+
+    @keyframes openEnvelope {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    .card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      border-radius: 10px;
       text-align: center;
+      z-index: 1;
+      transform: translateY(100%);
+      animation: slideUp 2s 1s ease forwards;
     }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
+
     h1 {
       color: #f497b5;
-      font-size: 2rem;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
+
     .details {
-      margin-top: 1.5rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
       line-height: 1.6;
+      margin-bottom: 1rem;
     }
+
     .map-link {
       display: inline-block;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       background: #a5d8ff;
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       color: #fff;
       text-decoration: none;
-      border-radius: 10px;
+      border-radius: 8px;
       font-weight: bold;
+      transition: background 0.3s;
     }
+
+    .map-link:hover {
+      background: #74c0fc;
+    }
+
     .footer {
-      margin-top: 2rem;
+      margin-top: 1rem;
       font-size: 0.9rem;
       color: #777;
+    }
+
+    @media (max-width: 450px) {
+      .envelope {
+        width: 90%;
+        height: auto;
+      }
+    }
+
+    .confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Join us for our Milo's first birthday celebration</h1>
-    <div class="details">
-      <p><strong>Who:</strong> Milo is turning 1!</p>
-      <p><strong>When:</strong> 6:00 PM, May 24, 2025</p>
-      <p><strong>Where:</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
-      <a class="map-link" href="https://maps.google.com/?q=12+Tr%E1%BA%A5n+V%C5%A9,+Ba+%C4%90%C3%ACnh,+H%C3%A0+N%E1%BB%99i" target="_blank">View on Map</a>
-    </div>
-    <div class="footer">
-      We can't wait to celebrate with you!
+  <audio id="openSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-01.mp3" preload="auto"></audio>
+  <canvas class="confetti"></canvas>
+  <div class="envelope">
+    <div class="flap-top"></div>
+    <div class="card">
+      <h1>Join us for Milo's first birthday celebration</h1>
+      <div class="details">
+        <p><strong>Who:</strong> Milo is turning 1!</p>
+        <p><strong>When:</strong> 6:00 PM, May 24, 2025</p>
+        <p><strong>Where:</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
+        <a class="map-link" href="https://maps.google.com/?q=12+Tr%E1%BA%A5n+V%C5%A9,+Ba+%C4%90%C3%ACnh,+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener noreferrer">View on Map</a>
+      </div>
+      <div class="footer">
+        We can't wait to celebrate with you!
+      </div>
     </div>
   </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const sound = document.getElementById('openSound');
+      sound.play();
+
+      // Simple confetti using canvas
+      const canvas = document.querySelector('.confetti');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const pieces = Array.from({ length: 100 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        size: Math.random() * 6 + 4,
+        speed: Math.random() * 3 + 2,
+        color: `hsl(${Math.random() * 360}, 70%, 60%)`
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (const p of pieces) {
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+          ctx.fill();
+          p.y += p.speed;
+          if (p.y > canvas.height) p.y = -10;
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    });
+  </script>
 </body>
 </html>
