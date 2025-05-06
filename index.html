@@ -86,16 +86,11 @@
         top: 20px;
         width: 100%;
         text-align: center;
-        font-size: 2rem;
+        font-size: clamp(1.2rem, 4vw, 2rem);
         color: #fff;
         text-shadow: 1px 1px 3px #000;
         z-index: 2;
         animation: thankYouFade 3s ease-in-out infinite;
-      }
-      @media (max-width: 600px) {
-        .thank-you {
-          font-size: 1.2rem;
-        }
       }
       @keyframes thankYouFade {
         0%, 100% { opacity: 1; }
@@ -143,6 +138,21 @@
           height: 50px;
         }
       }
+      @media (max-width: 400px) {
+        .invitation-content h1 {
+          font-size: 1.2rem;
+        }
+
+        .invitation-content h2 {
+          font-size: 1rem;
+        }
+
+        .details p,
+        .map-link,
+        .thank-you {
+          font-size: 0.85rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -155,9 +165,9 @@
         <h1>Join us for Milo's first birthday celebration</h1>
         <h2>Hãy đến chung vui trong tiệc sinh nhật đầu tiên của Milo với chúng tôi!</h2>
         <div class="details">
-          <p>🎉 <strong>Date:</strong> Saturday, May 24, 2025</p>
-          <p>🕒 <strong>Time:</strong> 18:00</p>
-          <p>📍 <strong>Location:</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
+          <p>🎉 <strong>Date (Ngày):</strong> Saturday, May 24, 2025</p>
+          <p>🕒 <strong>Time (Giờ):</strong> 18:00</p>
+          <p>📍 <strong>Location (Địa điểm):</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
         </div>
         <a class="map-link" href="https://maps.google.com/?q=12+Tr%E1%BA%A5n+V%C5%A9,+Ba+%C4%90%C3%ACnh,+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener noreferrer">View on Map</a>
       </div>
