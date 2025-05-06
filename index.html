@@ -87,6 +87,11 @@
         z-index: 2;
         animation: thankYouFade 3s ease-in-out infinite;
       }
+      @media (max-width: 600px) {
+      .thank-you {
+        font-size: 1.5rem; /* Smaller font on smaller screens */
+        }
+      }
       @keyframes thankYouFade {
         0%, 100% { opacity: 1; }
         50% { opacity: 0.5; }
