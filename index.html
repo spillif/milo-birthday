@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,6 +21,7 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
+        padding: 20px;
       }
       @keyframes animatedBackground {
         0% { background-position: 0% 50%; }
@@ -70,7 +70,7 @@
         opacity: 0;
       }
       .card {
-        width: 90%;
+        width: 100%;
         max-width: 800px;
         position: relative;
         display: flex;
@@ -114,16 +114,60 @@
         flex-wrap: wrap;
       }
       .invitation-text h1 {
-        font-size: 1.2rem;
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
       }
-    
       .invitation-text h2 {
-        font-size: 0.9rem;
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+      }
+      .outside p {
+        font-size: clamp(1rem, 5vw, 1.6rem);
+        text-transform: uppercase;
+        margin-top: 30px;
+        text-align: center;
+        letter-spacing: 6px;
+        color: #6a1b9a;
+      }
+      .outside h1 {
+        font-size: clamp(0.8rem, 3vw, 1.2rem);
+        color: #000;
+        text-align: center;
+      }
+      .inside h1 {
+        color: #f48fb1;
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
+        margin-bottom: 0;
+      }
+      .inside h2 {
+        font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+        margin-bottom: 1rem;
+        color: #000;
+      }
+      .details {
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+        color: #6a1b9a;
+      }
+      .map-link {
+        padding: 6px 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        background: #ce93d8;
+        color: white;
+        transition: background 0.3s ease;
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+      }
+      .map-link:hover {
+        background: #ba68c8;
       }
       @media (max-width: 768px) {
         .inside {
           flex-direction: column-reverse;
           padding: 10px;
+          width: 100%;
+        }
+        .outside,
+        .inside {
+          width: 100%;
+          left: 0;
         }
       }
       .outside {
@@ -145,6 +189,8 @@
         display: flex;
         margin: auto;
         width: 90%;
+        max-width: 100%;
+        height: auto;
         padding: 15px;
         object-fit: contain;
       }
@@ -214,51 +260,12 @@
         transform: rotate(45deg);
         left: -1px;
       }
-      .outside p {
-        font-size: 26px;
-        text-transform: uppercase;
-        margin-top: 30px;
-        text-align: center;
-        letter-spacing: 6px;
-        color: #6a1b9a;
-      }
-      .outside h1 {
-        font-size: 0.9rem;
-        color: #000;
-        text-align: center;
-      }
-      .inside h1 {
-        color: #f48fb1;
-        font-size: 1.4rem;
-        margin-bottom: 0;
-      }
-      .inside h2 {
-        font-size: 0.8rem;
-        margin-bottom: 1rem;
-        color: #000;
-      }
-      .details {
-        font-size: 0.9rem;
-        color: #6a1b9a;
-      }
-      .map-link {
-        padding: 6px 10px;
-        border-radius: 6px;
-        text-decoration: none;
-        background: #ce93d8;
-        color: white;
-        transition: background 0.3s ease;
-        font-size: 1rem;
-      }
-      .map-link:hover {
-        background: #ba68c8;
-      }
       .thank-you {
         position: fixed;
         top: 20px;
         width: 100%;
         text-align: center;
-        font-size: 2rem;
+        font-size: clamp(1.5rem, 5vw, 2rem);
         color: #fff;
         text-shadow: 1px 1px 3px #000;
         z-index: 2;
