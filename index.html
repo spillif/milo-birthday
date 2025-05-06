@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invitation</title>
+    <title>Birthday Card</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
     <style>
       * {
@@ -316,17 +316,8 @@
     document.addEventListener("DOMContentLoaded", function() {
       const confettiCanvas = document.querySelector(".confetti");
       const ctx = confettiCanvas.getContext("2d");
-      window.addEventListener("resize",() => {
       confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight});
-
-      const card = document.querySelector(".card");
-
-      // Detect tap or click
-      card.addEventListener("click", () => {
-        if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
-        card.classList.toggle("flipped");}
-      });
+      confettiCanvas.height = window.innerHeight;
 
       const pieces = Array.from({ length: 100 }, () => ({
         x: Math.random() * confettiCanvas.width,
@@ -355,9 +346,8 @@
 
       const fwCanvas = document.querySelector(".fireworks");
       const fwCtx = fwCanvas.getContext("2d");
-      window.addEventListener("resize", () => {
       fwCanvas.width = window.innerWidth;
-      fwCanvas.height = window.innerHeight;});
+      fwCanvas.height = window.innerHeight;
 
       function createFirework(x, y) {
         const particles = [];
@@ -406,6 +396,20 @@
         balloon.style.animationDelay = `${Math.random() * 5}s`;
         document.body.appendChild(balloon);
       }
+
+      const card = document.querySelector(".card");
+
+      // Flip card automatically after 4 seconds
+      setTimeout(() => {
+        card.classList.add("flipped");
+      }, 4000);
+
+      // Allow tap/click flip on mobile
+      card.addEventListener("click", () => {
+        if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+          card.classList.toggle("flipped");
+        }
+      });
     });
   </script>
   </body>
