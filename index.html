@@ -315,8 +315,17 @@
     document.addEventListener("DOMContentLoaded", function() {
       const confettiCanvas = document.querySelector(".confetti");
       const ctx = confettiCanvas.getContext("2d");
+      window.addEventListener("resize",() => {
       confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight;
+      confettiCanvas.height = window.innerHeight});
+
+      const card = document.querySelector(".card");
+
+      // Detect tap or click
+      card.addEventListener("click", () => {
+        if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+        card.classList.toggle("flipped");}
+      });
 
       const pieces = Array.from({ length: 100 }, () => ({
         x: Math.random() * confettiCanvas.width,
@@ -345,8 +354,9 @@
 
       const fwCanvas = document.querySelector(".fireworks");
       const fwCtx = fwCanvas.getContext("2d");
+      window.addEventListener("resize", () => {
       fwCanvas.width = window.innerWidth;
-      fwCanvas.height = window.innerHeight;
+      fwCanvas.height = window.innerHeight;});
 
       function createFirework(x, y) {
         const particles = [];
