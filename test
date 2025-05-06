@@ -240,3 +240,430 @@
     </script>
   </body>
 </html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        background: linear-gradient(270deg, #87cefa, #e0ffff, #b2ebf2, #87cefa);
+        background-size: 800% 800%;
+        animation: animatedBackground 20s ease infinite;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      @keyframes animatedBackground {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes float {
+        0% { transform: translateY(100vh); opacity: 0.5; }
+        100% { transform: translateY(-120vh); opacity: 0.9; }
+      }
+      @keyframes fireworks {
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(1.5); opacity: 0; }
+      }
+      @keyframes cloudMove {
+        0% { left: -200px; }
+        100% { left: 100%; }
+      }
+      .balloon {
+        position: absolute;
+        width: 40px;
+        height: 60px;
+        background-color: pink;
+        border-radius: 50% 50% 50% 50%;
+        opacity: 0.8;
+        animation: float 10s linear infinite;
+        z-index: 0;
+      }
+      .balloon::after {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        background: #888;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .firework {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle, #ff0, #f00);
+        border-radius: 50%;
+        animation: fireworks 1.5s ease-out infinite;
+        opacity: 0;
+      }
+      .card {
+        width: 100%;
+        max-width: 800px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1200px;
+        transition: 1s;
+        z-index: 1;
+        aspect-ratio: 16 / 10;
+      }
+      .card:fliiped {
+        transform: rotate(-2deg);
+      }
+      .card:flipped .outside {
+        transform: rotateY(-130deg);
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .card:hover {
+          transform: rotate(-2deg);
+        }
+        .card:hover .outside {
+          transform: rotateY(-130deg);
+        }
+      }
+      .outside,
+      .inside {
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        left: 50.1%;
+      }
+      .inside {
+        background: linear-gradient(to right, #fff0f5, #e0f2f1);
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        left: 50%;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .invitation-text h1 {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+      }
+      .invitation-text h2 {
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+      }
+      .outside p {
+        font-size: clamp(1rem, 5vw, 1.6rem);
+        text-transform: uppercase;
+        margin-top: 30px;
+        text-align: center;
+        letter-spacing: 6px;
+        color: #6a1b9a;
+      }
+      .outside h1 {
+        font-size: clamp(0.8rem, 3vw, 1.2rem);
+        color: #000;
+        text-align: center;
+      }
+      .inside h1 {
+        color: #f48fb1;
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
+        margin-bottom: 0;
+      }
+      .inside h2 {
+        font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+        margin-bottom: 1rem;
+        color: #000;
+      }
+      .details {
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+        color: #6a1b9a;
+      }
+      .map-link {
+        padding: 6px 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        background: #ce93d8;
+        color: white;
+        transition: background 0.3s ease;
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+      }
+      .map-link:hover {
+        background: #ba68c8;
+      }
+      @media (max-width: 768px) {
+        .inside {
+          flex-direction: column-reverse;
+          padding: 10px;
+          width: 100%;
+        }
+        .outside,
+        .inside {
+          width: 100%;
+          left: 0;
+        }
+      }
+      .outside {
+        transform-style: preserve-3d;
+        z-index: 1;
+        transform-origin: left;
+        transition: 2s;
+        cursor: pointer;
+      }
+      .front,
+      .back {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        backface-visibility: hidden;
+        transform: rotateX(0deg);
+      }
+      .back-image {
+        display: flex;
+        margin: auto;
+        width: 90%;
+        max-width: 100%;
+        height: auto;
+        padding: 15px;
+        object-fit: contain;
+      }
+      .front {
+        background-color: #fdf6f0;
+      }
+      .back {
+        transform: rotateY(180deg);
+        background: linear-gradient(to left, #f3e5f5, #e1f5fe);
+      }
+      .cake {
+        width: 100%;
+        position: absolute;
+        bottom: 30px;
+      }
+      .top-layer,
+      .middle-layer,
+      .bottom-layer {
+        height: 80px;
+        width: 240px;
+        background-repeat: repeat;
+        background-size: 60px 100px;
+        background-position: 28px 0;
+        background-image: linear-gradient(
+            transparent 50px,
+            #fedbab 50px,
+            #fedbab 60px,
+            transparent 60px
+          ),
+          radial-gradient(circle at 30px 5px, #ffb6b9 30px, #ffe082 31px);
+        border-radius: 10px 10px 0 0;
+        position: relative;
+        margin: auto;
+      }
+      .middle-layer {
+        transform: scale(0.85);
+        top: 6px;
+      }
+      .top-layer {
+        transform: scale(0.7);
+        top: 26px;
+      }
+      .candle {
+        height: 45px;
+        width: 15px;
+        background: repeating-linear-gradient(
+          45deg,
+          #fd3018 0,
+          #fd3018 5px,
+          #ffa89e 5px,
+          #ffa89e 10px
+        );
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        bottom: 202px;
+      }
+      .candle:before {
+        content: "";
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        background-color: #ffcc80;
+        border-radius: 0 50% 50% 50%;
+        bottom: 48px;
+        transform: rotate(45deg);
+        left: -1px;
+      }
+      .thank-you {
+        position: fixed;
+        top: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        color: #fff;
+        text-shadow: 1px 1px 3px #000;
+        z-index: 2;
+        animation: thankYouFade 3s ease-in-out infinite;
+      }
+      canvas.confetti, canvas.fireworks {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+      }
+      @keyframes thankYouFade {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+    </style>
+  </head>
+  <body>
+      <canvas class="confetti"></canvas>
+      <canvas class="fireworks"></canvas>
+    <div class="thank-you">Thank you for celebrating with us! 🎉</div>
+    <div class="card">
+      <div class="outside">
+        <div class="front">
+          <p>You're Invited</p>
+          <h1>Bạn được mời tham gia</h1>
+          <div class="cake">
+            <div class="candle"></div>
+            <div class="top-layer"></div>
+            <div class="middle-layer"></div>
+            <div class="bottom-layer"></div>
+          </div>
+        </div>
+        <div class="back">
+          <img class="back-image" src="https://raw.githubusercontent.com/spillif/milo-birthday/main/Image.jpg" alt="Birthday Celebration" />
+        </div>
+      </div>
+      <div class="inside">
+        <div class="invitation-text">
+          <h1>Join us for Milo's first birthday celebration</h1>
+          <h2>Hãy đến chung vui trong tiệc sinh nhật đầu tiên của Milo với chúng tôi!</h2>
+          <div class="details">
+            <p>🎉 <strong>Date:</strong> Saturday, May 24, 2025</p>
+            <p>🕒 <strong>Time:</strong> 18:00</p>
+            <p>📍 <strong>Location:</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
+          </div>
+          <a class="map-link" href="https://maps.google.com/?q=12+Tr%E1%BA%A5n+V%C5%A9,+Ba+%C4%90%C3%ACnh,+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener noreferrer">View on Map</a>
+        </div>
+      </div>
+    </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const confettiCanvas = document.querySelector(".confetti");
+      const ctx = confettiCanvas.getContext("2d");
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+
+      const pieces = Array.from({ length: 100 }, () => ({
+        x: Math.random() * confettiCanvas.width,
+        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+        size: Math.random() * 6 + 4,
+        speed: Math.random() * 3 + 2,
+        color: `hsl(${Math.random() * 360}, 70%, 60%)`
+      }));
+
+      function drawConfetti() {
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        for (const p of pieces) {
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+          ctx.fill();
+          p.y += p.speed;
+          if (p.y > confettiCanvas.height) {
+            p.y = -10;
+            p.x = Math.random() * confettiCanvas.width;
+          }
+        }
+        requestAnimationFrame(drawConfetti);
+      }
+      drawConfetti();
+
+      const fwCanvas = document.querySelector(".fireworks");
+      const fwCtx = fwCanvas.getContext("2d");
+      fwCanvas.width = window.innerWidth;
+      fwCanvas.height = window.innerHeight;
+
+      function createFirework(x, y) {
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+          particles.push({
+            x,
+            y,
+            angle: Math.random() * 2 * Math.PI,
+            speed: Math.random() * 4 + 1,
+            radius: Math.random() * 3 + 2,
+            alpha: 1,
+            color: `hsl(${Math.random() * 360}, 100%, 70%)`
+          });
+        }
+        return particles;
+      }
+
+      let fireworks = [];
+      setInterval(() => {
+        fireworks.push(...createFirework(Math.random() * fwCanvas.width, Math.random() * fwCanvas.height * 0.5));
+      }, 2000);
+
+      function drawFireworks() {
+        fwCtx.fillStyle = "rgba(255, 255, 255, 0.1)";
+        fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+        fireworks = fireworks.filter(p => p.alpha > 0.01);
+        for (const p of fireworks) {
+          p.x += Math.cos(p.angle) * p.speed;
+          p.y += Math.sin(p.angle) * p.speed;
+          p.alpha *= 0.96;
+          fwCtx.fillStyle = p.color;
+          fwCtx.globalAlpha = p.alpha;
+          fwCtx.beginPath();
+          fwCtx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+          fwCtx.fill();
+        }
+        fwCtx.globalAlpha = 1;
+        requestAnimationFrame(drawFireworks);
+      }
+      drawFireworks();
+
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = `${Math.random() * 100}vw`;
+        balloon.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(balloon);
+      }
+
+      const card = document.querySelector(".card");
+
+      // Flip card automatically after 4 seconds
+      setTimeout(() => {
+        card.classList.add("flipped");
+      }, 4000);
+
+      // Allow tap/click flip on mobile
+      card.addEventListener("click", () => {
+        if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+          card.classList.toggle("flipped");
+        }
+      });
+    });
+  </script>
+  </body>
+</html>
