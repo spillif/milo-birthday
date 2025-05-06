@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        background: linear-gradient(270deg, #87cefa, #e0ffff, #b2ebf2, #87cefa);
+        background-size: 800% 800%;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .invitation-container {
+        background: linear-gradient(to right, #fff0f5, #e0f2f1);
+        border-radius: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 900px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 10;
+        height: auto; /* Allow the height to adjust based on the image */
+      }
+      .invitation-image {
+        flex: 1 1 300px;
+        background: url('https://raw.githubusercontent.com/spillif/milo-birthday/main/Image.jpg') center/cover no-repeat;
+        min-height: 300px;
+        object-fit: cover;
+        width: 100%; /* Ensure it fills the full width of its container */
+      }
+      .invitation-content {
+        flex: 1 1 300px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .invitation-content h1 {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        color: #f48fb1;
+        margin-bottom: 10px;
+      }
+      .invitation-content h2 {
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        margin-bottom: 20px;
+        color: #000;
+      }
+      .details p {
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+        color: #6a1b9a;
+        margin-bottom: 10px;
+      }
+      .map-link {
+        padding: 6px 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        background: #ce93d8;
+        color: white;
+        transition: background 0.3s ease;
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
+        max-width: fit-content;
+      }
+      .map-link:hover {
+        background: #ba68c8;
+      }
+      .thank-you {
+        position: fixed;
+        top: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        color: #fff;
+        text-shadow: 1px 1px 3px #000;
+        z-index: 2;
+        animation: thankYouFade 3s ease-in-out infinite;
+      }
+      @keyframes thankYouFade {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      canvas.confetti, canvas.fireworks {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .balloon {
+        position: absolute;
+        background-color: #ff4081;
+        border-radius: 50%;
+        width: 30px;
+        height: 40px;
+        animation: floatUp 6s infinite ease-in;
+        animation-timing-function: ease-out;
+        z-index: 1;
+      }
+      .balloon:nth-child(even) {
+        background-color: #ff80ab;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+          width: 30px;
+          height: 40px;
+        }
+        50% {
+          transform: translateY(-50vh) rotate(360deg);
+          opacity: 0.8;
+          width: 35px;
+          height: 45px;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(720deg);
+          opacity: 0;
+          width: 40px;
+          height: 50px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas class="confetti"></canvas>
+    <canvas class="fireworks"></canvas>
+    <div class="thank-you">Thank you for celebrating with us! 🎉</div>
+    <div class="invitation-container">
+      <div class="invitation-image"></div>
+      <div class="invitation-content">
+        <h1>Join us for Milo's first birthday celebration</h1>
+        <h2>Hãy đến chung vui trong tiệc sinh nhật đầu tiên của Milo với chúng tôi!</h2>
+        <div class="details">
+          <p>🎉 <strong>Date:</strong> Saturday, May 24, 2025</p>
+          <p>🕒 <strong>Time:</strong> 18:00</p>
+          <p>📍 <strong>Location:</strong> Vua biển Seafood, 12 Trấn Vũ, Quận Ba Đình, Hà Nội</p>
+        </div>
+        <a class="map-link" href="https://maps.google.com/?q=12+Tr%E1%BA%A5n+V%C5%A9,+Ba+%C4%90%C3%ACnh,+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener noreferrer">View on Map</a>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const confettiCanvas = document.querySelector(".confetti");
+        const ctx = confettiCanvas.getContext("2d");
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+
+        const pieces = Array.from({ length: 100 }, () => ({
+          x: Math.random() * confettiCanvas.width,
+          y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+          size: Math.random() * 6 + 4,
+          speed: Math.random() * 3 + 2,
+          color: `hsl(${Math.random() * 360}, 70%, 60%)`
+        }));
+
+        function drawConfetti() {
+          ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+          for (const p of pieces) {
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+            ctx.fill();
+            p.y += p.speed;
+            if (p.y > confettiCanvas.height) {
+              p.y = -10;
+              p.x = Math.random() * confettiCanvas.width;
+            }
+          }
+          requestAnimationFrame(drawConfetti);
+        }
+        drawConfetti();
+
+        const fwCanvas = document.querySelector(".fireworks");
+        const fwCtx = fwCanvas.getContext("2d");
+        fwCanvas.width = window.innerWidth;
+        fwCanvas.height = window.innerHeight;
+
+        function createFirework(x, y) {
+          const particles = [];
+          for (let i = 0; i < 50; i++) {
+            particles.push({
+              x,
+              y,
+              angle: Math.random() * 2 * Math.PI,
+              speed: Math.random() * 4 + 1,
+              radius: Math.random() * 3 + 2,
+              alpha: 1,
+              color: `hsl(${Math.random() * 360}, 100%, 70%)`
+            });
+          }
+          return particles;
+        }
+
+        let fireworks = [];
+        setInterval(() => {
+          fireworks.push(...createFirework(Math.random() * fwCanvas.width, Math.random() * fwCanvas.height * 0.5));
+        }, 2000);
+
+        function drawFireworks() {
+          fwCtx.fillStyle = "rgba(255, 255, 255, 0.1)";
+          fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+          fireworks = fireworks.filter(p => p.alpha > 0.01);
+          for (const p of fireworks) {
+            p.x += Math.cos(p.angle) * p.speed;
+            p.y += Math.sin(p.angle) * p.speed;
+            p.alpha *= 0.96;
+            fwCtx.fillStyle = p.color;
+            fwCtx.globalAlpha = p.alpha;
+            fwCtx.beginPath();
+            fwCtx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+            fwCtx.fill();
+          }
+          fwCtx.globalAlpha = 1;
+          requestAnimationFrame(drawFireworks);
+        }
+        drawFireworks();
+
+        for (let i = 0; i < 20; i++) {
+          const balloon = document.createElement('div');
+          balloon.className = 'balloon';
+          balloon.style.left = `${Math.random() * 100}vw`;
+          balloon.style.animationDelay = `${Math.random() * 5}s`;
+          document.body.appendChild(balloon);
+        }
+      });
+    </script>
+  </body>
+</html>
