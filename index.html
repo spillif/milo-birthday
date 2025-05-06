@@ -79,21 +79,21 @@
         perspective: 1200px;
         transition: 1s;
         z-index: 1;
-        aspect-ratio: 16 / 10;
+        padding-top: 62.5%;
+        height: 0;
       }
-      .card:fliiped {
+      .card > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      .card.flipped {
         transform: rotate(-2deg);
       }
-      .card:flipped .outside {
+      .card.flipped .outside {
         transform: rotateY(-130deg);
-      }
-      @media (hover: hover) and (pointer: fine) {
-        .card:hover {
-          transform: rotate(-2deg);
-        }
-        .card:hover .outside {
-          transform: rotateY(-130deg);
-        }
       }
       .outside,
       .inside {
@@ -286,7 +286,7 @@
       }
     </style>
   </head>
-  <body>
+<body>
       <canvas class="confetti"></canvas>
       <canvas class="fireworks"></canvas>
     <div class="thank-you">Thank you for celebrating with us! 🎉</div>
