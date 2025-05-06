@@ -12,8 +12,7 @@
         font-family: "Poppins", sans-serif;
       }
       body {
-        background: linear-gradient(270deg, #87cefa, #e0ffff, #b2ebf2, #87cefa);
-        background-size: 800% 800%;
+        background: none;
         overflow: hidden;
         position: relative;
         display: flex;
@@ -21,6 +20,12 @@
         justify-content: center;
         min-height: 100vh;
         padding: 20px;
+      }
+      @media (max-width: 600px) {
+        body {
+          background: linear-gradient(270deg, #87cefa, #e0ffff, #b2ebf2, #87cefa);
+          background-size: 800% 800%;
+        }
       }
       .invitation-container {
         background: linear-gradient(to right, #fff0f5, #e0f2f1);
@@ -32,14 +37,14 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         position: relative;
         z-index: 10;
-        height: auto; /* Allow the height to adjust based on the image */
+        height: auto;
       }
       .invitation-image {
         flex: 1 1 300px;
         background: url('https://raw.githubusercontent.com/spillif/milo-birthday/main/Image.jpg') center/cover no-repeat;
         min-height: 300px;
         object-fit: cover;
-        width: 100%; /* Ensure it fills the full width of its container */
+        width: 100%;
       }
       .invitation-content {
         flex: 1 1 300px;
@@ -81,15 +86,15 @@
         top: 20px;
         width: 100%;
         text-align: center;
-        font-size: clamp(1.5rem, 5vw, 2rem);
+        font-size: 2rem;
         color: #fff;
         text-shadow: 1px 1px 3px #000;
         z-index: 2;
         animation: thankYouFade 3s ease-in-out infinite;
       }
       @media (max-width: 600px) {
-      .thank-you {
-        font-size: 1.5rem; /* Smaller font on smaller screens */
+        .thank-you {
+          font-size: 1.2rem;
         }
       }
       @keyframes thankYouFade {
