@@ -82,11 +82,19 @@
         transition: 1s;
         z-index: 1;
       }
-      .card:hover {
+      .card:fliiped {
         transform: rotate(-2deg);
       }
-      .card:hover .outside {
+      .card:flipped .outside {
         transform: rotateY(-130deg);
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .card:hover {
+          transform: rotate(-2deg);
+        }
+        .card:hover .outside {
+          transform: rotateY(-130deg);
+        }
       }
       .outside,
       .inside {
